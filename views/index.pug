@@ -1,0 +1,31 @@
+html
+  head
+    meta(charset= 'UTF-8')
+    meta(
+      name= 'viewport'
+      content= 'width=device-width, initial-scale=1.0'
+      )
+    title= title
+    link(rel= 'stylesheet' type= 'text/css' href= './css/meyers_reset.css')
+    link(rel= 'stylesheet' type= 'text/css' href= './css/styles.css')
+    script(type = 'text/javascript' src= '../js/index.js')
+  body
+    h1= 'Hello'
+    button(type= 'button' id= 'btn-item-new')= 'New Item'
+    button(type= 'button' id= 'btn-category-new')= 'New Category'
+
+    div(id= 'container-items')
+      ul(id= 'list-items')
+        each item in items
+          li(class= 'li-item')
+            h3= item.name
+            span= item.brand
+            span= `Skin Type: ${item.skin_type}`
+
+
+    div(id= 'div-category-new' class= 'hide')
+      h2= 'New Item Category'
+      form(id= 'form-category-new' method='POST' action='/category/new')
+        label(for='input-category')= 'Name: '
+          input(type= 'text' id= 'input-category' name= 'category' placeholder= 'Toner, Exfoliator...')
+        button(type= 'submit' id= 'btn-submit-category')= 'Add Category'

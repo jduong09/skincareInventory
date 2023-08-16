@@ -1,0 +1,34 @@
+html
+  head
+    meta(charset= 'UTF-8')
+    meta(
+      name= 'viewport'
+      content= 'width=device-width, initial-scale=1.0'
+      )
+    title= title
+    link(rel= 'stylesheet' type= 'text/css' href= '../../css/meyers_reset.css')
+    link(rel= 'stylesheet' type= 'text/css' href= '../../css/styles.css')
+    script(type= 'text/javascript' src= '../js/form.js')
+  body
+    header
+      h1= formTitle
+    main
+      div(class= 'container-form')
+        form(id= 'form-item' method= 'POST' action= item ? `/items/${item.id}/update` : '/item/new')
+          label(for= 'input-name')= 'Name: '
+            input(type= 'text' id= 'input-name' name= 'name' placeholder= 'Gold Bond Ultimate Hydrating Lotion' value= item ? item.name : '')
+          label(for= 'input-volume')= 'Volume: '
+            input(type= 'number' id= 'input-volume' name= 'volume' placeholder= '.2' value= item ? item.volume : '' readonly= item ? 'readonly' : false)
+          label(for= 'textarea-description')= 'Description: '
+            textarea(id= 'textarea-description' name= 'description', cols="30", rows="10")= item ? item.description : 'Item description goes here...'
+          label(for= 'input-brand')= 'Brand: '
+            input(type= 'text' id= 'input-brand' name= 'brand' placeholder= 'Gold Bond' value= item ? item.brand : '')
+          label(for= "skin-types-select")= 'Choose a Skin Type: '
+            select(name= "skin_type" id= "skin-types-select")
+              option(value= "" selected)= '--Please choose an option--'
+              option(value= "oily")= 'Oily'
+              option(value= "dry")= 'Dry'
+              option(value= "normal")= 'Normal'
+              option(value= "combination")= 'Combination'
+              option(value= "sensitive")= 'Sensitive'
+          button(type= 'submit' id= 'btn-submit')= item ? 'Update Item' : 'Add Item'
