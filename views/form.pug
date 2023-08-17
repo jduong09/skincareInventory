@@ -8,7 +8,7 @@ html
     title= title
     link(rel= 'stylesheet' type= 'text/css' href= '../../css/meyers_reset.css')
     link(rel= 'stylesheet' type= 'text/css' href= '../../css/styles.css')
-    script(type= 'text/javascript' src= '../js/form.js')
+    script(type= 'text/javascript' src= item ? '../../js/form.js' : '../js/form.js')
   body
     header
       h1= formTitle
@@ -25,10 +25,26 @@ html
             input(type= 'text' id= 'input-brand' name= 'brand' placeholder= 'Gold Bond' value= item ? item.brand : '')
           label(for= "skin-types-select")= 'Choose a Skin Type: '
             select(name= "skin_type" id= "skin-types-select")
-              option(value= "" selected)= '--Please choose an option--'
-              option(value= "oily")= 'Oily'
-              option(value= "dry")= 'Dry'
-              option(value= "normal")= 'Normal'
-              option(value= "combination")= 'Combination'
-              option(value= "sensitive")= 'Sensitive'
+              option(value= "" selected= `${item ? false : true}`)= '--Please choose an option--'
+              if item
+                option(value= "oily" selected= `${item.skin_type === 'oily' ? true : false}`)= 'Oily'
+                option(value= "dry" selected= `${item.skin_type === 'dry' ? true : false}`)= 'Dry'
+                option(value= "normal" selected= `${item.skin_type === 'normal' ? true : false}`)= 'Normal'
+                option(value= "combination" selected= `${item.skin_type === 'combination' ? true : false}`)= 'Combination'
+                option(value= "sensitive" selected= `${item.skin_type === 'sensitive' ? true : false}`)= 'Sensitive'
+              else
+                option(value= "oily")= 'Oily'
+                option(value= "dry")= 'Dry'
+                option(value= "normal")= 'Normal'
+                option(value= "combination")= 'Combination'
+                option(value= "sensitive")= 'Sensitive'
+          label(for= 'categories-select')= 'Choose a product category: '
+            select(name= 'category' id= 'categories-select')
+              option(value= '' selected= `${item ? false : true}`)= '--Please Choose An Option --'
+              if item
+                each category in categories
+                  option(value= category.name selected= `${item.category === category.name ? true : false}`)= category.name
+              else 
+                each category in categories
+                  option(value= category.name)= category.name
           button(type= 'submit' id= 'btn-submit')= item ? 'Update Item' : 'Add Item'

@@ -38,15 +38,24 @@ main {
   justify-content: space-between;
 }
 
+#list-item-actions {
+  display: flex;
+  align-items: center;
+}
+
+#list-item-actions > li {
+  margin-left: 1rem;
+}
+
 #div-items {
   padding: 2rem;
 }
 
 #list-items {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-rows: repeat(auto-fill, minmax(200px, 1fr));
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
 }
 
 .li-item {
@@ -59,16 +68,22 @@ main {
   text-align: center;
 }
 
-.li-book > h3, .li-book > span {
+.li-item > h3, .li-item > span {
   margin-bottom: .5rem;
 }
 
-.li-book > h3 {
+.li-item > h3 {
   text-align: center;
   font-size: 1.25rem;
 }
 
-#btn-category-new, #btn-item-new {
+.li-item > div {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+#btn-category-new, #btn-item-new, .btn-update-item, .btn-delete-item {
   padding: .5rem 1rem;
   border: 1px solid black;
   font-weight: 500;

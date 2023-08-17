@@ -15,17 +15,26 @@ html
     main
       div(id= 'div-items-header')
         h2= currentCategory
-        select(id= 'select-category')
-          option(value= '' selected= `${currentCategory === 'All Items' ? true : false}`)= 'Filter By...'
-          each category in categories
-            option(value= category.name)= category.name
+        ul(id= 'list-item-actions')
+          li
+            select(id= 'select-category')
+              option(value= '' selected= `${currentCategory === 'All Items' ? true : false}`)= 'Filter By...'
+              each category in categories
+                option(value= category.name)= category.name
+          li
+            button(id= 'btn-item-new' type= 'button')= 'Add Item'
+          li
+            button(id= 'btn-category-new' type= 'button')= 'Add Category'
       div(id= 'div-items')
         ul(id= 'list-items')
           each item in items
-            li(class= 'li-item')
+            li(class= 'li-item' data-item-id= `${item.id}`)
               h3= item.name
               span= item.brand
               span= `Skin Type: ${item.skin_type}`
+              div
+                button(class= 'btn-update-item' type= 'button')= 'Update'
+                button(class= 'btn-delete-item' type= 'button')= 'Delete'
       div(id= 'div-category-new' class= 'hide')
         h2= 'New Item Category'
         form(id= 'form-category-new' method='POST' action='/category/new')
