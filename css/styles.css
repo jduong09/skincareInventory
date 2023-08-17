@@ -27,60 +27,29 @@ h1 {
 }
 
 main {
-  display: flex;
-  flex-wrap: wrap;
   height: 100%;
 }
 
-/* Aside: list of collections in database */
-
-aside {
-  flex: 2 20%;
-  border-right: 2px solid black;
-  padding: 2rem;
-  text-align: center;
-}
-
-#btn-genre-new {
-  margin-bottom: 1rem;
-}
-
-.li-genre {
-  margin-bottom: .5rem;
-}
-
 /* Div: list of books of selected collection */
-
-.wrapper-books {
-  flex: 2 80%;
-}
-
-#books-header {
+#div-items-header {
+  padding: 2rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 1rem 2rem;
-  border-bottom: 2px solid black;
 }
 
-#header-collection {
-  font-size: 1.75rem;
-  font-weight: 700;
-}
-
-
-.container-books {
+#div-items {
   padding: 2rem;
 }
 
-.container-books > ul {
-  display: grid;
-  grid-template-rows: repeat(auto-fill, minmax(200px, 1fr));
-  grid-template-columns: repeat(3, 1fr);
-  gap: 1rem;
+#list-items {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
 }
 
-.li-book {
+.li-item {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -90,22 +59,16 @@ aside {
   text-align: center;
 }
 
-.li-book > h2, .li-book > div {
+.li-book > h3, .li-book > span {
   margin-bottom: .5rem;
 }
 
-.li-book > h2 {
+.li-book > h3 {
   text-align: center;
   font-size: 1.25rem;
 }
 
-.container-btns {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 0;
-}
-
-.container-btns > button, #btn-book-new, #btn-genre-new {
+#btn-category-new, #btn-item-new {
   padding: .5rem 1rem;
   border: 1px solid black;
   font-weight: 500;

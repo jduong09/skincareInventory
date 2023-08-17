@@ -36,29 +36,53 @@ app.post('/item/new', async (req, res) => {
 // Create Category?
 app.post('/category/new', async (req, res) => {
   await mongoose.connect(mongoConnection);
-  const newCategory = new Category({ name: req.body.name });
+  const newCategory = new Category({ name: req.body.category });
   await newCategory.save();
 
-  await mongoose.disconnect();
   res.redirect('/');
+  await mongoose.disconnect();
 })
 // Read
 
 // Read All Items
 app.get('/', async (req, res) => {
   mongoose.connect(mongoConnection);
-  const items = await Item.find({}).then(data => {
-    return data.map((item) => {
-      return {
-        name: item.name,
-        brand: item.brand,
-        skin_type: item.skin_type,
-      }
+  let items;
+  let currentCategory = 'All Items';
+
+  if (req.query.category) {
+    items = await Item.find({ category: [req.query.category] }).then(data => {
+      return data.map((item) => {
+        return {
+          name: item.name,
+          brand: item.brand,
+          skin_type: item.skin_type,
+        }
+      });
     });
+
+    currentCategory = req.query.category;
+  } else {
+    items = await Item.find({}).then(data => {
+      return data.map((item) => {
+        return {
+          name: item.name,
+          brand: item.brand,
+          skin_type: item.skin_type,
+        }
+      });
+    });
+  }
+
+  const categories = await Category.find({}).then(data => {
+    return data.map((category) => {
+      return {
+        name: category.name
+      }
+    })
   });
-  await mongoose.disconnect();
-  res.render('index', { items });
-  
+
+  res.render('index', { items, categories, currentCategory });
 });
 
 // Read new item form
