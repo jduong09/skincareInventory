@@ -4,6 +4,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const selectCategory = document.getElementById('select-category');
   const btnsUpdateItem = document.getElementsByClassName('btn-update-item');
   const btnsDeleteItem = document.getElementsByClassName('btn-delete-item');
+  const arrayItems = document.getElementsByClassName('li-item');
 
   btnItemNew.addEventListener('click', (e) => {
     e.preventDefault();
@@ -56,5 +57,15 @@ document.addEventListener('DOMContentLoaded', () => {
         console.log(err.message);
       })
     })
+  }
+
+  for (let l = 0; l < arrayItems.length; l++) {
+    arrayItems[l].addEventListener('click', (e) => {
+      e.preventDefault();
+
+      const dataId = e.currentTarget.getAttribute('data-item-id');
+
+      window.location = `/items/${dataId}`;
+    });
   }
 });
