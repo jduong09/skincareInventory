@@ -20,7 +20,7 @@ html
             select(id= 'select-category')
               option(value= '' selected= `${currentCategory === 'All Items' ? true : false}`)= 'Filter By...'
               each category in categories
-                option(value= category.name)= category.name
+                option(value= category.name selected= currentCategory === category.name )= category.name
           li
             button(id= 'btn-item-new' type= 'button')= 'Add Item'
           li

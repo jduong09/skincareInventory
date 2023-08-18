@@ -16,7 +16,7 @@ const mongoConnection = process.env.uri;
 // Create Item
 app.post('/item/new', async (req, res) => {
   await mongoose.connect(mongoConnection);
-  console.log(req.body);
+  const categoryId = await Category.findOne({ name: req.body.category }).then(data => data._id.toString());
 
   const itemData = {
     name: req.body.name,
@@ -24,6 +24,7 @@ app.post('/item/new', async (req, res) => {
     description: req.body.description,
     brand: req.body.brand,
     skin_type: req.body.skin_type,
+    category: [categoryId]
   }
 
   const newItem = new Item(itemData);
@@ -49,9 +50,17 @@ app.get('/', async (req, res) => {
   mongoose.connect(mongoConnection);
   let items;
   let currentCategory = 'All Items';
-
+  
   if (req.query.category) {
-    items = await Item.find({ category: [req.query.category] }).then(data => {
+    const foundCategory = await Category.findOne({ name: req.query.category })
+      .then(data => {
+        return {
+          id: data._id.toString(),
+          name: data.name
+        }
+      });
+
+    items = await Item.find({ category: [foundCategory.id] }).then(data => {
       return data.map((item) => {
         return {
           id: item._id.toString(),
@@ -61,7 +70,8 @@ app.get('/', async (req, res) => {
         }
       });
     });
-    currentCategory = req.query.category;
+    
+    currentCategory = foundCategory.name;
   } else {
     items = await Item.find({}).then(data => {
       return data.map((item) => {
@@ -110,7 +120,6 @@ app.get('/items/:itemId', async (req, res) => {
 
 // Read Items based on category
 app.get(`/items/:categoryName`, async (req, res) => {
-  console.log(req.params.categoryName);
   const items = await Item.find({ category: [req.params.categoryName] }).then(data => {
     return data.map((item) => {
       return {
@@ -141,7 +150,7 @@ app.get('/items/:itemId/update', async (req, res) => {
       volume: data.volume,
       description: data.description,
       brand: data.brand,
-      skin_type: data.skin_type,
+      skin_type: data.skin_type[0],
       category: data.category
     }
   });
@@ -154,6 +163,8 @@ app.post('/items/:itemId/update', async (req, res) => {
   await mongoose.connect(mongoConnection);
   const updatedCategories = [];
 
+
+
   if (req.body.category) {
     const foundCategory = await Category.findOne({ name: req.body.category }).then(data => data);
     updatedCategories.push(foundCategory._id)
@@ -163,7 +174,8 @@ app.post('/items/:itemId/update', async (req, res) => {
     name: req.body.name,
     volume: req.body.volume,
     description: req.body.description,
-    brand: req.body.skin_type,
+    brand: req.body.brand,
+    skin_type: req.body.skin_type,
     category: updatedCategories
   }
   
@@ -179,6 +191,16 @@ app.post('/items/:itemId/update', async (req, res) => {
 // Delete
 
 // Delete Item?
+app.delete('/items/:itemId/delete', async (req, res) => {
+  await mongoose.connect(mongoConnection);
+
+  try {
+    await Item.findOneAndDelete({ _id: req.params.itemId })
+    res.send({ message: 'Success' });
+  } catch(err) {
+    res.send({ message: 'Problem deleting Item' });
+  }
+});
 
 app.listen(port, () => {
   console.log(`Inventory App listening on port ${port}`);

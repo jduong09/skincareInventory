@@ -27,11 +27,11 @@ html
             select(name= "skin_type" id= "skin-types-select")
               option(value= "" selected= `${item ? false : true}`)= '--Please choose an option--'
               if item
-                option(value= "oily" selected= `${item.skin_type === 'oily' ? true : false}`)= 'Oily'
-                option(value= "dry" selected= `${item.skin_type === 'dry' ? true : false}`)= 'Dry'
-                option(value= "normal" selected= `${item.skin_type === 'normal' ? true : false}`)= 'Normal'
-                option(value= "combination" selected= `${item.skin_type === 'combination' ? true : false}`)= 'Combination'
-                option(value= "sensitive" selected= `${item.skin_type === 'sensitive' ? true : false}`)= 'Sensitive'
+                option(value= "oily" selected= item.skin_type === 'oily')= 'Oily'
+                option(value= "dry" selected= item.skin_type === 'dry')= 'Dry'
+                option(value= "normal" selected= item.skin_type === 'normal')= 'Normal'
+                option(value= "combination" selected= item.skin_type === 'combination')= 'Combination'
+                option(value= "sensitive" selected= item.skin_type === 'sensitive')= 'Sensitive'
               else
                 option(value= "oily")= 'Oily'
                 option(value= "dry")= 'Dry'

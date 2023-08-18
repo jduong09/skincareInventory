@@ -3,7 +3,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const btnCategoryNew = document.getElementById('btn-category-new');
   const selectCategory = document.getElementById('select-category');
   const btnsUpdateItem = document.getElementsByClassName('btn-update-item');
-  // const btnsDeleteItem = document.getElementsByClassName('btn-delete-item');
+  const btnsDeleteItem = document.getElementsByClassName('btn-delete-item');
 
   btnItemNew.addEventListener('click', (e) => {
     e.preventDefault();
@@ -18,8 +18,16 @@ document.addEventListener('DOMContentLoaded', () => {
     divCategoryNew.classList.remove('hide');
   });
 
-  selectCategory.addEventListener('onchange', (e) => {
-    console.log(e.currentTarget.value);
+  selectCategory.addEventListener('change', (e) => {
+    e.preventDefault();
+
+    const filterValue = e.currentTarget.value;
+
+    if (filterValue === '') {
+      window.location = '/';
+    } else {
+      window.location = `/?category=${filterValue}`;
+    }
   });
 
   for (let i = 0; i < btnsUpdateItem.length; i++) {
@@ -31,5 +39,22 @@ document.addEventListener('DOMContentLoaded', () => {
 
       window.location = `items/${dataItemId}/update`;
     });
+  }
+
+  for (let k = 0; k < btnsDeleteItem.length; k++) {
+    btnsDeleteItem[k].addEventListener('click', (e) => {
+      e.preventDefault();
+
+      const parentEle = e.currentTarget.parentElement.parentElement;
+      const dataItemId = parentEle.getAttribute('data-item-id');
+
+      fetch(`items/${dataItemId}/delete`, {
+        method: 'DELETE'
+      }).then((res) => {
+        console.log(res.message);
+      }).catch((err) => {
+        console.log(err.message);
+      })
+    })
   }
 });
