@@ -44,7 +44,7 @@ app.post('/category/new', async (req, res) => {
   }
 });
 // Read
-
+// Index Page.
 // Read All Items
 app.get('/', async (req, res) => {
   mongoose.connect(mongoConnection);
@@ -96,7 +96,7 @@ app.get('/', async (req, res) => {
   res.render('index', { items, categories, currentCategory });
 });
 
-// Read new item form
+// Get New Item Form
 app.get('/item/new', async (req, res) => {
   await mongoose.connect(mongoConnection);
 
@@ -111,11 +111,35 @@ app.get('/item/new', async (req, res) => {
   res.render('form', { title: 'Add Item', categories });
 });
 
-// Read One Item
+// Get Item Detail Page
 app.get('/items/:itemId', async (req, res) => {
   const item = await Item.findById(req.params.itemId);
+  
+  const itemData = {
+    name: item.name,
+    volume: item.volume, 
+    description: item.description,
+    brand: item.brand,
+    skin_type: item.skin_type[0],
+    category: item.category[0]
+  }
 
-  res.render('detail', { item });
+  const category = await Category.findById(item.category[0]);
+
+  const allProductsByCategory = await Item.find({ category: [category._id] }).then(data => {
+    return data.reduce((result, product) => {
+      if (product._id.toString() !== req.params.itemId) {
+        result.push({
+          id: product._id.toString(),
+          name: product.name,
+          brand: product.brand
+        })
+      }
+      return result;
+    }, []);
+  });
+
+  res.render('detail', { item: itemData, currentCategory: category.name, productsByCategory: allProductsByCategory });
 });
 
 // Read Items based on category
@@ -132,6 +156,7 @@ app.get(`/items/:categoryName`, async (req, res) => {
   res.render('index', { items });
 });
 // Update
+// Get Update Form Page.
 app.get('/items/:itemId/update', async (req, res) => {
   await mongoose.connect(mongoConnection);
 
@@ -157,13 +182,10 @@ app.get('/items/:itemId/update', async (req, res) => {
   res.render('form', { title: 'Update Item', item, categories });
 });
 
-// Update item? 
-  // Admin privileges? 
+// Update item by itemId and Form Body.
 app.post('/items/:itemId/update', async (req, res) => {
   await mongoose.connect(mongoConnection);
   const updatedCategories = [];
-
-
 
   if (req.body.category) {
     const foundCategory = await Category.findOne({ name: req.body.category }).then(data => data);
@@ -186,11 +208,11 @@ app.post('/items/:itemId/update', async (req, res) => {
     console.log(err);
   }
 });
+
 // Update Categories?
 
 // Delete
-
-// Delete Item?
+// Delete Item by itemId
 app.delete('/items/:itemId/delete', async (req, res) => {
   await mongoose.connect(mongoConnection);
 

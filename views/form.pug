@@ -18,7 +18,7 @@ html
           label(for= 'input-name')= 'Name: '
             input(type= 'text' id= 'input-name' name= 'name' placeholder= 'Gold Bond Ultimate Hydrating Lotion' value= item ? item.name : '')
           label(for= 'input-volume')= 'Volume: '
-            input(type= 'number' id= 'input-volume' name= 'volume' placeholder= '.2' value= item ? item.volume : '' readonly= item ? 'readonly' : false)
+            input(type= 'number' id= 'input-volume' name= 'volume' placeholder= '16 oz...' value= item ? item.volume : '' readonly= item ? 'readonly' : false)
           label(for= 'textarea-description')= 'Description: '
             textarea(id= 'textarea-description' name= 'description', cols="30", rows="10")= item ? item.description : 'Item description goes here...'
           label(for= 'input-brand')= 'Brand: '

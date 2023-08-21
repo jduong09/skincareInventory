@@ -16,9 +16,9 @@ body {
 }
 
 header {
-  border-bottom: 2px solid #a3785c;
+  border-bottom: 2px solid #6C4C3D;
   padding: 2rem;
-  background-color: #a3785c;
+  background-color: #6C4C3D;
 }
 
 h1 {
@@ -29,6 +29,7 @@ h1 {
 
 main {
   height: 100%;
+  background-color: #b5937d40;
 }
 
 /* Div: list of books of selected collection */
@@ -41,8 +42,7 @@ main {
 
 #div-items-header > h2 {
   font-size: 1.5rem;
-  font-weight: 700;
-  color: #a3785c;
+  font-weight: 600;
 }
 
 #list-item-actions {
@@ -82,6 +82,7 @@ main {
 .li-item > h3 {
   text-align: center;
   font-size: 1.25rem;
+  font-weight: 600;
 }
 
 .li-item > div {
@@ -90,42 +91,15 @@ main {
   justify-content: space-between;
 }
 
-#btn-category-new, #btn-item-new, .btn-update-item, .btn-delete-item {
+#btn-category-new, #btn-item-new, .btn-update-item, .btn-delete-item, #btn-submit-category {
   padding: .5rem 1rem;
-  border: 1px solid black;
-  font-weight: 500;
-  cursor: pointer;
-}
-
-/* Form PUG */
-.container-form {
   border: 2px solid black;
-  padding: 2rem;
-}
-
-form {
-  display: flex;
-  flex-direction: column;
-}
-
-form > label {
-  margin-bottom: .5rem;
-  font-weight: 500;
-  width: 100%;
-}
-
-label > input {
-  padding: .5rem 1rem;
-}
-
-#btn-submit {
-  padding: .75rem 1.5rem;
-  border: 2px solid black;
-  font-weight: 700;
+  font-weight: 600;
+  font-size: 1rem;
 }
 
 /* New Collection Modal */
-#div-modal-collection {
+#div-category-new {
   position: absolute;
   top: 50%;
   left: 50%;
@@ -134,21 +108,111 @@ label > input {
   z-index: 5;
   padding: 1rem;
   background-color: white;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
 }
 
-#div-modal-collection > h3 {
+#div-category-new > h3 {
   font-weight: 700;
   font-size: 1.5rem;
+}
+
+#div-category-new > h3 {
+  flex: 2 75%;
+}
+
+#div-category-new > button {
+  flex: 2 25%;
+  text-align: end;
+}
+
+#div-category-new > h3, #div-category-new > button {
   margin-bottom: 1rem;
-  text-align: center;
+}
+
+#form-category-new {
+  flex: 1 100%;
+}
+
+#form-category-new > label {
+  display: flex;
+}
+
+#form-category-new > label > input {
+  flex: 1;
+  margin-left: 1rem;
 }
 
 #div-background {
-  width: 100vw;
-  height: 100vh;
+  width: 100%;
+  height: 100%;
   position: absolute;
   top: 0;
   left: 0;
   z-index: 3;
   background-color: hsla(0, 0%, 0%, .5);
+}
+
+/* Select Dropdown CSS reset and styling */
+.select-wrapper {
+  display: inline-block;
+  position: relative;
+}
+
+/* Arrow Down */
+.select-wrapper::after {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    content: "";
+    display: inline-block;
+    width: 11px;
+    height: 11px;
+    border-right: 0.2em solid black;
+    border-top: 0.2em solid black;
+    transform: rotate(135deg);
+    margin-right: 0.5em;
+    margin-left: 1.0em;
+}
+
+select {
+  padding: .5rem 2.5rem .5rem 1rem;
+  font-size: 1rem;
+  font-weight: 600;
+  border: 2px solid hsl(0, 0%, 0%);
+  background-color: transparent;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+
+select::-ms-expand {
+  display: none;
+}
+
+option {
+  appearance: none;
+  background-color: #6C4C3D;
+  color: black;
+}
+
+/* Active States */
+#btn-category-new:hover, #btn-item-new:hover, .btn-update-item:hover, .btn-delete-item:hover, #btn-submit-category:hover {
+  border-color: white;
+  color: white;
+  cursor: pointer;
+}
+
+.li-item:hover {
+  background-color: #6C4C3D;
+  border-color: #6C4C3D;
+  cursor: pointer;
+  color: white;
+}
+
+.li-item button:hover {
+  border-color: #b5937d40;
+  color: #b5937d40;
 }

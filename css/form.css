@@ -1,0 +1,27 @@
+/* Form PUG */
+.container-form {
+  border: 2px solid black;
+  padding: 2rem;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+}
+
+form > label {
+  margin-bottom: .5rem;
+  font-weight: 500;
+  width: 100%;
+}
+
+label > input {
+  padding: .5rem 1rem;
+}
+
+#btn-submit {
+  padding: .75rem 1.5rem;
+  border: 2px solid black;
+  font-weight: 700;
+}
+

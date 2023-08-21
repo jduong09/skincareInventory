@@ -8,11 +8,34 @@ html
     title= title
     link(rel= 'stylesheet' type= 'text/css' href= '../../css/meyers_reset.css')
     link(rel= 'stylesheet' type= 'text/css' href= '../../css/styles.css')
-    script(type= 'text/javascript' src= '../js/detail.js')
+    link(rel= 'stylesheet' type= 'text/css' href= '../../css/detail.css')
 body
   header
     h1= 'Skin Care Inventory'
-
   main
-    div= 'image here'
+    div(id= 'div-product')
+      div(id= 'div-product-image')= 'image here'
+      div(id= 'div-product-details')
+        div(id= 'div-details-header')
+          h2= item.name
+          h3= item.brand
+        div(id= 'div-details')
+          ul
+            li= `Product Type: ${currentCategory}`
+            li= `Volume: ${item.volume}`
+            li= `Skin Type: ${item.skin_type}`
+          div(id= 'div-description')= `${item.description}`
+    div(id= 'div-similar-products')
+      h2= `Other ${currentCategory}`
+      ul(id= 'list-other-products')
+        each product in productsByCategory 
+          li(class= 'item-other-product' data-product-id= product.id)
+            span= 'image here'
+            h3= product.name
+            span= product.brand
+
+        
+
+
+
 

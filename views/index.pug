@@ -17,14 +17,15 @@ html
         h2= currentCategory
         ul(id= 'list-item-actions')
           li
-            select(id= 'select-category')
-              option(value= '' selected= `${currentCategory === 'All Items' ? true : false}`)= 'Filter By...'
-              each category in categories
-                option(value= category.name selected= currentCategory === category.name )= category.name
-          li
             button(id= 'btn-item-new' type= 'button')= 'Add Item'
           li
             button(id= 'btn-category-new' type= 'button')= 'Add Category'
+          li
+            div(class= 'select-wrapper')
+              select(id= 'select-category')
+                option(value= '' selected= `${currentCategory === 'All Items' ? true : false}`)= 'All'
+                each category in categories
+                  option(value= category.name selected= currentCategory === category.name )= category.name
       div(id= 'div-items')
         ul(id= 'list-items')
           each item in items
@@ -36,8 +37,10 @@ html
                 button(class= 'btn-update-item' type= 'button')= 'Update'
                 button(class= 'btn-delete-item' type= 'button')= 'Delete'
       div(id= 'div-category-new' class= 'hide')
-        h2= 'New Item Category'
+        h3= 'New Item Category'
+        button(type= 'button' id= 'btn-close-collection-new')= 'X'
         form(id= 'form-category-new' method='POST' action='/category/new')
           label(for='input-category')= 'Name: '
             input(type= 'text' id= 'input-category' name= 'category' placeholder= 'Toner, Exfoliator...')
           button(type= 'submit' id= 'btn-submit-category')= 'Add Category'
+      div(id= 'div-background' class= 'hide')
